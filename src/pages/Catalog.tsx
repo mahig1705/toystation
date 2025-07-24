@@ -174,7 +174,6 @@ const products = [{ 'id': 1, 'code': 'TS397', 'name': 'Brick Tiles Blocks', 'cat
 { 'id': 157, 'code': 'TS887', 'name': 'English Learner Blue Laptop', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
 { 'id': 158, 'code': 'TS905', 'name': 'Face Off Bee', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
 { 'id': 159, 'code': 'TS218', 'name': 'Faster Feet Master Mind', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-
 { 'id': 160, 'code': 'TS513', 'name': 'Go Go Fishing', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
 { 'id': 161, 'code': 'TS804', 'name': 'Indian Mini Passenger Train', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
 { 'id': 162, 'code': 'TS530', 'name': 'Learning Smart Phone', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
