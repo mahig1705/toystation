@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const getProductImagePath = (code: string) => `/images/products/${code}.jpeg`;
 
 // Your categories and counts
 const toyCategories = [
@@ -15,159 +18,172 @@ const categoryCounts = {
 };
 
 // Add full 390-product array here
-const products = [{ 'id': 1, 'code': 'TS397', 'name': 'Brick Tiles Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 2, 'code': 'TS851', 'name': 'Bullet Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 3, 'code': 'TS856', 'name': 'Cat Link Ups', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 4, 'code': 'TS514', 'name': 'Childhood Fun Intelligent Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 5, 'code': 'TS464', 'name': 'Clown Balancing', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 6, 'code': 'TS161', 'name': 'Dairy Farm Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 7, 'code': 'TS842', 'name': 'Edu Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 8, 'code': 'TS223', 'name': 'Edu Blocks 1', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 9, 'code': 'TS846', 'name': 'Flower Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 10, 'code': 'TS852', 'name': 'Flower Link Ups', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 11, 'code': 'TS840', 'name': 'Giant Polydrone', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 12, 'code': 'TS120', 'name': 'Granular Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 13, 'code': 'TS844', 'name': 'Hexie Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 14, 'code': 'TS337', 'name': 'House Blocks 2', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 15, 'code': 'TS431', 'name': 'House Building Blocks 3', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 16, 'code': 'TS434', 'name': 'House Building Blocks 3', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 17, 'code': 'TS571', 'name': 'Jumbo Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 18, 'code': 'TS162', 'name': 'Jungle Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 19, 'code': 'TS849', 'name': 'Junior Builders', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 20, 'code': 'TS462', 'name': 'Lego Duplo', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 21, 'code': 'TS843', 'name': 'Magnetics House Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 22, 'code': 'TS850', 'name': 'Miracle Bricks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 23, 'code': 'TS841', 'name': 'Ok Play Train Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 24, 'code': 'TS347', 'name': 'On U Mind', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 25, 'code': 'TS845', 'name': 'Playtown Hopuse Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 26, 'code': 'TS855', 'name': 'Saxo Flute', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 27, 'code': 'TS853', 'name': 'Stylo Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 28, 'code': 'TS133', 'name': 'Sun Modello', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 29, 'code': 'TS463', 'name': 'Zoo Carnival', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 30, 'code': 'TS378', 'name': 'Game Of States', 'category': 'Board Games', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 31, 'code': 'TS377', 'name': 'Trap', 'category': 'Board Games', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 32, 'code': 'TS152', 'name': 'Action Reaction', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 33, 'code': 'TS858', 'name': 'Animal Baaied', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 34, 'code': 'TS033', 'name': 'Animal Baby & Habitat', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 35, 'code': 'TS451', 'name': 'Animal Bingo', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 36, 'code': 'TS907', 'name': 'Animal Pairing Sleeve', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 37, 'code': 'TS050', 'name': 'Bug Building', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 38, 'code': 'TS873', 'name': 'Classification Box', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 39, 'code': 'TS860', 'name': 'Colour Chain', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 40, 'code': 'TS351', 'name': 'Colour Fun', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 41, 'code': 'TS872', 'name': 'Colours & Shape Fun', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 42, 'code': 'TS868', 'name': 'Colours Around Us Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 43, 'code': 'TS865', 'name': 'Colours Matching', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 44, 'code': 'TS150', 'name': 'Criss Cross', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 45, 'code': 'TS864', 'name': 'Expression Puzzl', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 46, 'code': 'TS108', 'name': 'Find The Sequence Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 47, 'code': 'TS024', 'name': 'Fisherman Shape Sorter', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 48, 'code': 'TS149', 'name': 'Food Whiz', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 49, 'code': 'TS019', 'name': 'Fun With Opposittes', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 50, 'code': 'TS863', 'name': 'Hexa Numbers', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 51, 'code': 'TS455', 'name': 'Match & Learn Opposites', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 52, 'code': 'TS082', 'name': 'Match It Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 53, 'code': 'TS861', 'name': 'Opposite Cards', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 54, 'code': 'TS394', 'name': 'Orange & Lemon', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 55, 'code': 'TS870', 'name': 'Peppa Pig Memory Game', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 56, 'code': 'TS151', 'name': 'Shadow Matching  Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 57, 'code': 'TS871', 'name': 'Shape 3 Piece Puzle', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 58, 'code': 'TS025', 'name': 'Shape Make Box', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 59, 'code': 'TS067', 'name': 'Shapes Around Us', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 60, 'code': 'TS073', 'name': 'Ship Shape', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 61, 'code': 'TS371', 'name': 'When Series', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 62, 'code': 'TS859', 'name': 'Why Series', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 63, 'code': 'TS862', 'name': 'Zoom Out', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 64, 'code': 'TS746', 'name': 'African Safari', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 65, 'code': 'TS755', 'name': 'Brain Booster', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 66, 'code': 'TS396', 'name': 'Brain Twister 2 In 1', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 67, 'code': 'TS087', 'name': 'Brick To Brick', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 68, 'code': 'TS172', 'name': 'Colour Track', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 69, 'code': 'TS747', 'name': 'Dominoes Black', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 70, 'code': 'TS745', 'name': 'First Cry Intellikit', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 71, 'code': 'TS300', 'name': 'Flag It', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 72, 'code': 'TS754', 'name': 'Four In A Row', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 73, 'code': 'TS372', 'name': 'Hide & Seek Jungle', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 74, 'code': 'TS753', 'name': 'Jumping Frog', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 75, 'code': 'TS748', 'name': "Let'S Sort Together", 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 76, 'code': 'TS742', 'name': 'Line 0-5', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 77, 'code': 'TS388', 'name': 'Link Designer', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 78, 'code': 'TS751', 'name': 'Magnetic Designer 3 In 1', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 79, 'code': 'TS752', 'name': 'Magnetic Vehicles', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 80, 'code': 'TS317', 'name': 'Master Mind Junior', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 81, 'code': 'TS749', 'name': 'Monkey Basket', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 82, 'code': 'TS750', 'name': 'My Daily Calendar', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 83, 'code': 'TS743', 'name': 'Skill Matches', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 84, 'code': 'TS211', 'name': 'Sudoku  Mickey', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 85, 'code': 'TS282', 'name': 'Sudoku Junior', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 86, 'code': 'TS326', 'name': 'Traffic Hour', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 87, 'code': 'TS313', 'name': 'Visual Logic', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 88, 'code': 'TS744', 'name': 'World Tour', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 89, 'code': 'TS621', 'name': '', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 90, 'code': 'TS605', 'name': 'Around The World Musical', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 91, 'code': 'TS620', 'name': 'At The Garage Tray', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 92, 'code': 'TS614', 'name': 'Basket Ball Mini', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 93, 'code': 'TS619', 'name': 'Basket Ball Musical Hoop', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 94, 'code': 'TS596', 'name': 'Button Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 95, 'code': 'TS607', 'name': 'Chicoo Cup Bowling', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 96, 'code': 'TS618', 'name': 'Chicoo Mister Ring', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 97, 'code': 'TS606', 'name': 'Clour Race', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 98, 'code': 'TS609', 'name': 'Cricket Set', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 99, 'code': 'TS612', 'name': 'Egg Sorter Box', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 100, 'code': 'TS615', 'name': 'Elephant Twist & Turn', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 101, 'code': 'TS613', 'name': 'Fun Rotating Snail', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 102, 'code': 'TS603', 'name': 'Geometric Shape Sorter Puzzle', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 103, 'code': 'TS608', 'name': 'Gobble', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 104, 'code': 'TS611', 'name': 'Knobbed Cylinders Colour', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 105, 'code': 'TS234', 'name': 'Lacing Figures', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 106, 'code': 'TS617', 'name': 'Magnetic Sticks', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 107, 'code': 'TS610', 'name': 'Musical Activity', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 108, 'code': 'TS604', 'name': 'Musical Shape Xylophone Bus', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 109, 'code': 'TS602', 'name': 'Rainbow Ball Tower', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 110, 'code': 'TS789', 'name': 'Rainbow Stake Up', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 111, 'code': 'TS096', 'name': 'Round Button Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 112, 'code': 'TS788', 'name': 'Shape Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 113, 'code': 'TS790', 'name': 'Shirt Button Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 114, 'code': 'TS616', 'name': 'Spin & Sing Alphabet Zoo', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 115, 'code': 'TS523', 'name': 'String Of Fruits Beads', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 116, 'code': 'TS601', 'name': 'Talent Blocks', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 117, 'code': 'TS791', 'name': 'Tree Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 118, 'code': 'TS233', 'name': 'Wooden Beat Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 119, 'code': 'TS340', 'name': 'Animal Colour Track', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 120, 'code': 'TS652', 'name': 'Azul', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 121, 'code': 'TS316', 'name': 'Bunnu Burrow', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 122, 'code': 'TS459', 'name': 'Calculation Shelf Abacus', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 123, 'code': 'TS656', 'name': 'Catan', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 124, 'code': 'TS369', 'name': 'Chatur Kids', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 125, 'code': 'TS304', 'name': 'Checolo', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 126, 'code': 'TS657', 'name': 'Cluedo', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 127, 'code': 'TS385', 'name': 'Discover Asia', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 128, 'code': 'TS651', 'name': 'Doodle Quest', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 129, 'code': 'TS342', 'name': 'Frog Twist & Turn', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 130, 'code': 'TS757', 'name': 'Good Habits Board Gane', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 131, 'code': 'TS135', 'name': 'Hare & Turtle Wooden Story', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 132, 'code': 'TS653', 'name': 'Incredible India', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 133, 'code': 'TS274', 'name': 'Jungle Lodo', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 134, 'code': 'TS277', 'name': 'Know India', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 135, 'code': 'TS432', 'name': 'Magnetic Animals', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 136, 'code': 'TS453', 'name': 'Memory Game Fun School', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 137, 'code': 'TS275', 'name': 'Monopoly Junir', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 138, 'code': 'TS295', 'name': 'Never Ending Stories', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 139, 'code': 'TS245', 'name': 'Pattern Play', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 140, 'code': 'TS303', 'name': 'Quiz Time 1', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 141, 'code': 'TS301', 'name': 'Quiz Time Part 2', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 142, 'code': 'TS199', 'name': 'Quiz Time Senior', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 143, 'code': 'TS319', 'name': 'River Crossing', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 144, 'code': 'TS531', 'name': 'Scoop Stake Up', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 145, 'code': 'TS201', 'name': 'Shape Ball', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 146, 'code': 'TS310', 'name': 'Shoping Plaza', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 147, 'code': 'TS461', 'name': 'Three In One Musical Board', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 148, 'code': 'TS269', 'name': 'Tom & Jerry Chase Game', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 149, 'code': 'TS290', 'name': 'Under The Sea', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 150, 'code': 'TS454', 'name': 'Word Building Spelling Game', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 151, 'code': 'TS810', 'name': 'Air Ball', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 152, 'code': 'TS220', 'name': 'Black Drum', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
-{ 'id': 153, 'code': 'TS805', 'name': 'Cargo Mini Train', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
+const products = [
+  { 'id': 1, 'code': 'TS397', 'name': 'Brick Tiles Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Classic building blocks shaped like brick tiles for creative construction and architectural play', 'age': '3+', 'rating': 0, 'features': ['Interlocking design', 'Develops spatial skills'] },
+  { 'id': 2, 'code': 'TS851', 'name': 'Bullet Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Streamlined bullet-shaped building blocks for dynamic construction projects', 'age': '4+', 'rating': 0, 'features': ['Aerodynamic shape', 'Promotes engineering thinking'] },
+  { 'id': 3, 'code': 'TS856', 'name': 'Cat Link Ups', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Adorable cat-themed linking blocks that connect together for endless building fun', 'age': '3+', 'rating': 0, 'features': ['Animal theme', 'Easy-connect system'] },
+  { 'id': 4, 'code': 'TS514', 'name': 'Childhood Fun Intelligent Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Educational building blocks designed to enhance cognitive development and problem-solving skills', 'age': '4+', 'rating': 0, 'features': ['Educational design', 'Cognitive development'] },
+  { 'id': 5, 'code': 'TS464', 'name': 'Clown Balancing', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Colorful clown-themed balancing blocks that teach balance and coordination while building', 'age': '3+', 'rating': 0, 'features': ['Balance training', 'Colorful clown design'] },
+  { 'id': 6, 'code': 'TS161', 'name': 'Dairy Farm Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Farm-themed building blocks featuring dairy animals and farm structures for imaginative play', 'age': '3+', 'rating': 0, 'features': ['Farm theme', 'Animal figures included'] },
+  { 'id': 7, 'code': 'TS842', 'name': 'Edu Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Educational building blocks with letters, numbers, and shapes for learning while playing', 'age': '3+', 'rating': 0, 'features': ['Learning elements', 'Multi-concept education'] },
+  { 'id': 8, 'code': 'TS223', 'name': 'Edu Blocks 1', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'First level educational blocks introducing basic concepts like colors, shapes, and counting', 'age': '2+', 'rating': 0, 'features': ['Beginner level', 'Basic concepts'] },
+  { 'id': 9, 'code': 'TS846', 'name': 'Flower Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Beautiful flower-shaped building blocks in vibrant colors for creative garden-themed constructions', 'age': '3+', 'rating': 0, 'features': ['Flower shapes', 'Vibrant colors'] },
+  { 'id': 10, 'code': 'TS852', 'name': 'Flower Link Ups', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Interlocking flower-themed blocks that connect to create beautiful floral patterns and structures', 'age': '3+', 'rating': 0, 'features': ['Floral patterns', 'Interlocking system'] },
+  { 'id': 11, 'code': 'TS840', 'name': 'Giant Polydrone', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Large geometric building blocks with multiple faces for advanced 3D construction projects', 'age': '5+', 'rating': 0, 'features': ['Giant size', 'Geometric shapes'] },
+  { 'id': 12, 'code': 'TS120', 'name': 'Granular Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Small granular building blocks perfect for detailed construction and fine motor skill development', 'age': '4+', 'rating': 0, 'features': ['Fine motor skills', 'Detailed construction'] },
+  { 'id': 13, 'code': 'TS844', 'name': 'Hexie Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Hexagon-shaped building blocks that tessellate perfectly for creating honeycomb patterns', 'age': '4+', 'rating': 0, 'features': ['Hexagonal shape', 'Tessellation patterns'] },
+  { 'id': 14, 'code': 'TS337', 'name': 'House Blocks 2', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'House-building blocks set with walls, roofs, and architectural elements for realistic constructions', 'age': '4+', 'rating': 0, 'features': ['Architectural elements', 'Realistic building'] },
+  { 'id': 15, 'code': 'TS431', 'name': 'House Building Blocks 3', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Advanced house building set with detailed components for creating elaborate home structures', 'age': '5+', 'rating': 0, 'features': ['Advanced building', 'Detailed components'] },
+  { 'id': 16, 'code': 'TS434', 'name': 'House Building Blocks 3', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Comprehensive house building blocks with doors, windows, and decorative elements', 'age': '5+', 'rating': 0, 'features': ['Doors and windows', 'Decorative elements'] },
+  { 'id': 17, 'code': 'TS571', 'name': 'Jumbo Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Extra-large building blocks perfect for toddlers and big construction projects', 'age': '2+', 'rating': 0, 'features': ['Extra-large size', 'Toddler-friendly'] },
+  { 'id': 18, 'code': 'TS162', 'name': 'Jungle Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Jungle-themed building blocks featuring wild animals and tropical elements', 'age': '3+', 'rating': 0, 'features': ['Jungle theme', 'Wild animal figures'] },
+  { 'id': 19, 'code': 'TS849', 'name': 'Junior Builders', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Building blocks designed specifically for young builders with easy-grip design', 'age': '2+', 'rating': 0, 'features': ['Easy-grip design', 'Junior-friendly'] },
+  { 'id': 20, 'code': 'TS462', 'name': 'Lego Duplo', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Compatible large building blocks for safe play and creative construction for toddlers', 'age': '2+', 'rating': 0, 'features': ['Duplo compatible', 'Safe for toddlers'] },
+  { 'id': 21, 'code': 'TS843', 'name': 'Magnetics House Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Magnetic building blocks for house construction with easy snap-together connections', 'age': '4+', 'rating': 0, 'features': ['Magnetic connection', 'Easy assembly'] },
+  { 'id': 22, 'code': 'TS850', 'name': 'Miracle Bricks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Innovative building bricks with special connecting features for miraculous constructions', 'age': '4+', 'rating': 0, 'features': ['Innovative design', 'Special connections'] },
+  { 'id': 23, 'code': 'TS841', 'name': 'Ok Play Train Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Train-themed building blocks that can be assembled into locomotives and carriages', 'age': '3+', 'rating': 0, 'features': ['Train theme', 'Vehicle assembly'] },
+  { 'id': 24, 'code': 'TS347', 'name': 'On U Mind', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Mind-challenging building blocks that promote creative thinking and problem-solving', 'age': '5+', 'rating': 0, 'features': ['Mind challenge', 'Problem-solving'] },
+  { 'id': 25, 'code': 'TS845', 'name': 'Playtown Hopuse Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Town-themed building blocks for creating an entire miniature city with houses and buildings', 'age': '4+', 'rating': 0, 'features': ['Town theme', 'City building'] },
+  { 'id': 26, 'code': 'TS855', 'name': 'Saxo Flute', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Musical building blocks that can be assembled into saxophone and flute shapes', 'age': '4+', 'rating': 0, 'features': ['Musical theme', 'Instrument shapes'] },
+  { 'id': 27, 'code': 'TS853', 'name': 'Stylo Blocks', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Stylish modern building blocks with contemporary designs and sleek connections', 'age': '4+', 'rating': 0, 'features': ['Modern design', 'Stylish appearance'] },
+  { 'id': 28, 'code': 'TS133', 'name': 'Sun Modello', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Sun-themed building model blocks with bright colors and solar system elements', 'age': '4+', 'rating': 0, 'features': ['Solar theme', 'Bright colors'] },
+  { 'id': 29, 'code': 'TS463', 'name': 'Zoo Carnival', 'category': 'Blocks', 'type': 'toy', 'image': '', 'description': 'Zoo and carnival-themed building blocks with animals and fun fair elements', 'age': '3+', 'rating': 0, 'features': ['Zoo theme', 'Carnival elements'] },
+  
+  // Board Games
+  { 'id': 30, 'code': 'TS378', 'name': 'Game Of States', 'category': 'Board Games', 'type': 'toy', 'image': '', 'description': 'Educational board game teaching geography and facts about different states', 'age': '8+', 'rating': 0, 'features': ['Geography learning', 'State facts'] },
+  { 'id': 31, 'code': 'TS377', 'name': 'Trap', 'category': 'Board Games', 'type': 'toy', 'image': '', 'description': 'Strategic board game where players set traps and avoid obstacles to win', 'age': '6+', 'rating': 0, 'features': ['Strategic gameplay', 'Trap mechanics'] },
+  
+  // Conceptual Toys
+  { 'id': 32, 'code': 'TS152', 'name': 'Action Reaction', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Cause and effect learning toy demonstrating action and reaction principles', 'age': '4+', 'rating': 0, 'features': ['Cause-effect learning', 'Science concepts'] },
+  { 'id': 33, 'code': 'TS858', 'name': 'Animal Baaied', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Animal-based learning toy focusing on animal sounds and characteristics', 'age': '3+', 'rating': 0, 'features': ['Animal sounds', 'Characteristic learning'] },
+  { 'id': 34, 'code': 'TS033', 'name': 'Animal Baby & Habitat', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Educational toy teaching about baby animals and their natural habitats', 'age': '3+', 'rating': 0, 'features': ['Habitat learning', 'Baby animals'] },
+  { 'id': 35, 'code': 'TS451', 'name': 'Animal Bingo', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Classic bingo game featuring various animals for fun learning experience', 'age': '4+', 'rating': 0, 'features': ['Bingo gameplay', 'Animal recognition'] },
+  { 'id': 36, 'code': 'TS907', 'name': 'Animal Pairing Sleeve', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Matching game with sleeve format for pairing animals and learning relationships', 'age': '3+', 'rating': 0, 'features': ['Pairing skills', 'Animal relationships'] },
+  { 'id': 37, 'code': 'TS050', 'name': 'Bug Building', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Insect-themed construction toy for learning about bug anatomy and characteristics', 'age': '4+', 'rating': 0, 'features': ['Insect learning', 'Anatomy education'] },
+  { 'id': 38, 'code': 'TS873', 'name': 'Classification Box', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Sorting and classification toy with multiple categories for organizing skills', 'age': '3+', 'rating': 0, 'features': ['Sorting skills', 'Classification learning'] },
+  { 'id': 39, 'code': 'TS860', 'name': 'Colour Chain', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Colorful chain links for learning color patterns and sequencing skills', 'age': '3+', 'rating': 0, 'features': ['Color patterns', 'Sequencing skills'] },
+  { 'id': 40, 'code': 'TS351', 'name': 'Colour Fun', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Interactive color learning toy with games and activities for color recognition', 'age': '2+', 'rating': 0, 'features': ['Color recognition', 'Interactive games'] },
+  { 'id': 41, 'code': 'TS872', 'name': 'Colours & Shape Fun', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Combined learning toy for colors and shapes with engaging activities', 'age': '3+', 'rating': 0, 'features': ['Color and shape learning', 'Combined concepts'] },
+  { 'id': 42, 'code': 'TS868', 'name': 'Colours Around Us Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Wooden toy exploring colors found in everyday environment and nature', 'age': '3+', 'rating': 0, 'features': ['Natural materials', 'Environmental colors'] },
+  { 'id': 43, 'code': 'TS865', 'name': 'Colours Matching', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Color matching game developing visual discrimination and memory skills', 'age': '3+', 'rating': 0, 'features': ['Color matching', 'Memory skills'] },
+  { 'id': 44, 'code': 'TS150', 'name': 'Criss Cross', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Pattern-making toy with criss-cross design for spatial reasoning development', 'age': '4+', 'rating': 0, 'features': ['Pattern making', 'Spatial reasoning'] },
+  { 'id': 45, 'code': 'TS864', 'name': 'Expression Puzzl', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Puzzle focusing on facial expressions and emotions for emotional intelligence', 'age': '4+', 'rating': 0, 'features': ['Emotion recognition', 'Expression learning'] },
+  { 'id': 46, 'code': 'TS108', 'name': 'Find The Sequence Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Wooden sequencing toy for logical thinking and pattern recognition skills', 'age': '4+', 'rating': 0, 'features': ['Sequence learning', 'Logical thinking'] },
+  { 'id': 47, 'code': 'TS024', 'name': 'Fisherman Shape Sorter', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Fishing-themed shape sorter combining fine motor skills with shape recognition', 'age': '2+', 'rating': 0, 'features': ['Shape sorting', 'Fishing theme'] },
+  { 'id': 48, 'code': 'TS149', 'name': 'Food Whiz', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Food-themed learning toy teaching nutrition and healthy eating concepts', 'age': '3+', 'rating': 0, 'features': ['Nutrition learning', 'Food classification'] },
+  { 'id': 49, 'code': 'TS019', 'name': 'Fun With Opposittes', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Educational toy teaching opposite concepts through fun interactive activities', 'age': '3+', 'rating': 0, 'features': ['Opposite concepts', 'Language development'] },
+  { 'id': 50, 'code': 'TS863', 'name': 'Hexa Numbers', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Hexagon-shaped number learning toy combining geometry with mathematics', 'age': '4+', 'rating': 0, 'features': ['Number learning', 'Geometric shapes'] },
+  { 'id': 51, 'code': 'TS455', 'name': 'Match & Learn Opposites', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Matching game specifically designed for learning opposite concepts and vocabulary', 'age': '3+', 'rating': 0, 'features': ['Matching skills', 'Vocabulary building'] },
+  { 'id': 52, 'code': 'TS082', 'name': 'Match It Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Wooden matching game with various categories for cognitive skill development', 'age': '3+', 'rating': 0, 'features': ['Matching skills', 'Wooden construction'] },
+  { 'id': 53, 'code': 'TS861', 'name': 'Opposite Cards', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Card-based learning system for teaching opposite concepts through visual pairs', 'age': '4+', 'rating': 0, 'features': ['Card format', 'Visual learning'] },
+  { 'id': 54, 'code': 'TS394', 'name': 'Orange & Lemon', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Fruit-themed learning toy teaching colors, shapes, and basic categorization', 'age': '2+', 'rating': 0, 'features': ['Fruit learning', 'Color concepts'] },
+  { 'id': 55, 'code': 'TS870', 'name': 'Peppa Pig Memory Game', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Popular character-themed memory game for developing concentration and recall', 'age': '3+', 'rating': 0, 'features': ['Character theme', 'Memory development'] },
+  { 'id': 56, 'code': 'TS151', 'name': 'Shadow Matching  Wooden', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Wooden shadow matching game for visual perception and shape recognition', 'age': '3+', 'rating': 0, 'features': ['Shadow matching', 'Visual perception'] },
+  { 'id': 57, 'code': 'TS871', 'name': 'Shape 3 Piece Puzle', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Simple 3-piece puzzles focusing on basic shape recognition for young learners', 'age': '2+', 'rating': 0, 'features': ['Simple puzzles', 'Basic shapes'] },
+  { 'id': 58, 'code': 'TS025', 'name': 'Shape Make Box', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Shape creation box with various geometric pieces for building and learning', 'age': '3+', 'rating': 0, 'features': ['Shape creation', 'Geometric learning'] },
+  { 'id': 59, 'code': 'TS067', 'name': 'Shapes Around Us', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Educational toy showing how shapes appear in everyday objects and environment', 'age': '3+', 'rating': 0, 'features': ['Real-world shapes', 'Environmental learning'] },
+  { 'id': 60, 'code': 'TS073', 'name': 'Ship Shape', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Nautical-themed shape learning toy with ships and maritime elements', 'age': '3+', 'rating': 0, 'features': ['Nautical theme', 'Shape learning'] },
+  { 'id': 61, 'code': 'TS371', 'name': 'When Series', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Time and sequence learning toy teaching "when" concepts and temporal relationships', 'age': '4+', 'rating': 0, 'features': ['Time concepts', 'Sequence learning'] },
+  { 'id': 62, 'code': 'TS859', 'name': 'Why Series', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Cause and effect learning toy encouraging questions and scientific thinking', 'age': '4+', 'rating': 0, 'features': ['Cause-effect learning', 'Scientific thinking'] },
+  { 'id': 63, 'code': 'TS862', 'name': 'Zoom Out', 'category': 'Conceptual', 'type': 'toy', 'image': '', 'description': 'Visual perception toy with zoom-out concept for understanding scale and perspective', 'age': '4+', 'rating': 0, 'features': ['Scale understanding', 'Visual perception'] },
+  
+  // Intellectual Toys
+  { 'id': 64, 'code': 'TS746', 'name': 'African Safari', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Safari-themed intellectual game with African wildlife and adventure challenges', 'age': '6+', 'rating': 0, 'features': ['Safari theme', 'Challenge-based'] },
+  { 'id': 65, 'code': 'TS755', 'name': 'Brain Booster', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Cognitive enhancement toy with multiple brain training activities and puzzles', 'age': '5+', 'rating': 0, 'features': ['Brain training', 'Multiple activities'] },
+  { 'id': 66, 'code': 'TS396', 'name': 'Brain Twister 2 In 1', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Dual-function brain teaser combining two different intellectual challenges', 'age': '6+', 'rating': 0, 'features': ['Dual function', 'Brain teaser'] },
+  { 'id': 67, 'code': 'TS087', 'name': 'Brick To Brick', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Sequential building challenge requiring logical thinking and planning skills', 'age': '5+', 'rating': 0, 'features': ['Sequential building', 'Logical thinking'] },
+  { 'id': 68, 'code': 'TS172', 'name': 'Colour Track', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Color-based tracking game developing pattern recognition and following skills', 'age': '4+', 'rating': 0, 'features': ['Pattern tracking', 'Color sequences'] },
+  { 'id': 69, 'code': 'TS747', 'name': 'Dominoes Black', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Classic black dominoes set for strategic gameplay and mathematical thinking', 'age': '6+', 'rating': 0, 'features': ['Classic dominoes', 'Strategic gameplay'] },
+  { 'id': 70, 'code': 'TS745', 'name': 'First Cry Intellikit', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Comprehensive intelligence development kit with multiple cognitive activities', 'age': '4+', 'rating': 0, 'features': ['Multiple activities', 'Intelligence development'] },
+  { 'id': 71, 'code': 'TS300', 'name': 'Flag It', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Flag recognition and geography game for learning about world countries', 'age': '6+', 'rating': 0, 'features': ['Flag recognition', 'Geography learning'] },
+  { 'id': 72, 'code': 'TS754', 'name': 'Four In A Row', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Strategic alignment game requiring forward thinking and tactical planning', 'age': '5+', 'rating': 0, 'features': ['Strategic thinking', 'Tactical planning'] },
+  { 'id': 73, 'code': 'TS372', 'name': 'Hide & Seek Jungle', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Jungle-themed puzzle game with hidden elements and discovery challenges', 'age': '4+', 'rating': 0, 'features': ['Hidden elements', 'Discovery challenges'] },
+  { 'id': 74, 'code': 'TS753', 'name': 'Jumping Frog', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Logic puzzle with jumping frog mechanics for sequential problem solving', 'age': '5+', 'rating': 0, 'features': ['Logic puzzle', 'Sequential solving'] },
+  { 'id': 75, 'code': 'TS748', 'name': "Let'S Sort Together", 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Collaborative sorting game promoting teamwork and classification skills', 'age': '4+', 'rating': 0, 'features': ['Collaborative play', 'Sorting skills'] },
+  { 'id': 76, 'code': 'TS742', 'name': 'Line 0-5', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Number line learning toy for understanding basic mathematical concepts 0-5', 'age': '3+', 'rating': 0, 'features': ['Number line', 'Basic math'] },
+  { 'id': 77, 'code': 'TS388', 'name': 'Link Designer', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Creative linking system for designing and building complex structures', 'age': '5+', 'rating': 0, 'features': ['Creative design', 'Complex structures'] },
+  { 'id': 78, 'code': 'TS751', 'name': 'Magnetic Designer 3 In 1', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Three-in-one magnetic design system for versatile creative construction', 'age': '5+', 'rating': 0, 'features': ['Magnetic pieces', 'Triple functionality'] },
+  { 'id': 79, 'code': 'TS752', 'name': 'Magnetic Vehicles', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Magnetic vehicle construction set for building cars, trucks, and transportation', 'age': '4+', 'rating': 0, 'features': ['Vehicle building', 'Magnetic assembly'] },
+  { 'id': 80, 'code': 'TS317', 'name': 'Master Mind Junior', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Junior version of classic code-breaking game for developing deductive reasoning', 'age': '5+', 'rating': 0, 'features': ['Code breaking', 'Deductive reasoning'] },
+  { 'id': 81, 'code': 'TS749', 'name': 'Monkey Basket', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Monkey-themed sorting and coordination game with basket challenges', 'age': '4+', 'rating': 0, 'features': ['Sorting game', 'Coordination skills'] },
+  { 'id': 82, 'code': 'TS750', 'name': 'My Daily Calendar', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Interactive calendar toy for learning days, months, and time concepts', 'age': '4+', 'rating': 0, 'features': ['Time learning', 'Calendar skills'] },
+  { 'id': 83, 'code': 'TS743', 'name': 'Skill Matches', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Multi-skill matching game combining various cognitive abilities', 'age': '4+', 'rating': 0, 'features': ['Multi-skill', 'Cognitive development'] },
+  { 'id': 84, 'code': 'TS211', 'name': 'Sudoku  Mickey', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Mickey Mouse themed Sudoku puzzle for logical thinking and number placement', 'age': '6+', 'rating': 0, 'features': ['Mickey theme', 'Logic puzzles'] },
+  { 'id': 85, 'code': 'TS282', 'name': 'Sudoku Junior', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Simplified Sudoku puzzles designed for young minds to develop logic skills', 'age': '5+', 'rating': 0, 'features': ['Simplified puzzles', 'Logic development'] },
+  { 'id': 86, 'code': 'TS326', 'name': 'Traffic Hour', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Traffic management puzzle game teaching planning and coordination skills', 'age': '5+', 'rating': 0, 'features': ['Traffic management', 'Planning skills'] },
+  { 'id': 87, 'code': 'TS313', 'name': 'Visual Logic', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Visual pattern and logic game for developing analytical thinking skills', 'age': '5+', 'rating': 0, 'features': ['Visual patterns', 'Analytical thinking'] },
+  { 'id': 88, 'code': 'TS744', 'name': 'World Tour', 'category': 'Intellectual', 'type': 'toy', 'image': '', 'description': 'Geography-based intellectual game exploring countries and cultures worldwide', 'age': '6+', 'rating': 0, 'features': ['Geography learning', 'Cultural exploration'] },
+
+  // Lacing Toys
+  { 'id': 89, 'code': 'TS621', 'name': '', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Basic lacing activity for developing fine motor skills and hand-eye coordination', 'age': '3+', 'rating': 0, 'features': ['Fine motor skills', 'Hand-eye coordination'] },
+  { 'id': 90, 'code': 'TS605', 'name': 'Around The World Musical', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Musical lacing toy with world themes and cultural sounds', 'age': '3+', 'rating': 0, 'features': ['Musical elements', 'Cultural themes'] },
+  { 'id': 91, 'code': 'TS620', 'name': 'At The Garage Tray', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Garage-themed lacing tray with vehicle and tool lacing activities', 'age': '3+', 'rating': 0, 'features': ['Garage theme', 'Vehicle lacing'] },
+  { 'id': 92, 'code': 'TS614', 'name': 'Basket Ball Mini', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Mini basketball-themed toy combining sports with fine motor skill development', 'age': '3+', 'rating': 0, 'features': ['Sports theme', 'Mini size'] },
+  { 'id': 93, 'code': 'TS619', 'name': 'Basket Ball Musical Hoop', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Musical basketball hoop with lacing elements and sports sound effects', 'age': '3+', 'rating': 0, 'features': ['Musical sounds', 'Basketball theme'] },
+  { 'id': 94, 'code': 'TS596', 'name': 'Button Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Button-themed lacing activity teaching practical life skills and coordination', 'age': '3+', 'rating': 0, 'features': ['Life skills', 'Button practice'] },
+  { 'id': 95, 'code': 'TS607', 'name': 'Chicoo Cup Bowling', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Bowling game with cups combining sport activity with motor skill development', 'age': '3+', 'rating': 0, 'features': ['Bowling game', 'Cup stacking'] },
+  { 'id': 96, 'code': 'TS618', 'name': 'Chicoo Mister Ring', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Ring-based activity toy with multiple challenge levels for skill progression', 'age': '2+', 'rating': 0, 'features': ['Ring activities', 'Progressive difficulty'] },
+  { 'id': 97, 'code': 'TS606', 'name': 'Clour Race', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Color-based racing game combining speed with color recognition skills', 'age': '3+', 'rating': 0, 'features': ['Color recognition', 'Racing element'] },
+  { 'id': 98, 'code': 'TS609', 'name': 'Cricket Set', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Cricket-themed play set introducing children to popular sport concepts', 'age': '4+', 'rating': 0, 'features': ['Cricket theme', 'Sports introduction'] },
+  { 'id': 99, 'code': 'TS612', 'name': 'Egg Sorter Box', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Egg-shaped sorting box for categorization and fine motor skill development', 'age': '2+', 'rating': 0, 'features': ['Egg shapes', 'Sorting skills'] },
+  { 'id': 100, 'code': 'TS615', 'name': 'Elephant Twist & Turn', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Elephant-themed twisting toy for developing wrist movement and coordination', 'age': '2+', 'rating': 0, 'features': ['Elephant theme', 'Twisting motion'] },
+  { 'id': 101, 'code': 'TS613', 'name': 'Fun Rotating Snail', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Rotating snail toy with engaging movement patterns and colorful design', 'age': '2+', 'rating': 0, 'features': ['Rotating action', 'Snail theme'] },
+  { 'id': 102, 'code': 'TS603', 'name': 'Geometric Shape Sorter Puzzle', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Shape sorting puzzle combining geometry learning with problem-solving', 'age': '3+', 'rating': 0, 'features': ['Shape sorting', 'Geometric learning'] },
+  { 'id': 103, 'code': 'TS608', 'name': 'Gobble', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Interactive feeding game with gobbling action and cause-effect learning', 'age': '2+', 'rating': 0, 'features': ['Feeding game', 'Interactive action'] },
+  { 'id': 104, 'code': 'TS611', 'name': 'Knobbed Cylinders Colour', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Montessori-inspired knobbed cylinders in various colors for sensory learning', 'age': '2+', 'rating': 0, 'features': ['Montessori inspired', 'Sensory learning'] },
+  { 'id': 105, 'code': 'TS234', 'name': 'Lacing Figures', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Figure-shaped lacing cards for developing threading skills and patterns', 'age': '3+', 'rating': 0, 'features': ['Figure shapes', 'Threading skills'] },
+  { 'id': 106, 'code': 'TS617', 'name': 'Magnetic Sticks', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Magnetic stick construction toy for building and magnetic force exploration', 'age': '3+', 'rating': 0, 'features': ['Magnetic force', 'Construction play'] },
+  { 'id': 107, 'code': 'TS610', 'name': 'Musical Activity', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Musical activity center with multiple instruments and sound exploration', 'age': '2+', 'rating': 0, 'features': ['Musical sounds', 'Activity center'] },
+  { 'id': 108, 'code': 'TS604', 'name': 'Musical Shape Xylophone Bus', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Bus-shaped xylophone combining transportation theme with musical learning', 'age': '2+', 'rating': 0, 'features': ['Xylophone sounds', 'Bus theme'] },
+  { 'id': 109, 'code': 'TS602', 'name': 'Rainbow Ball Tower', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Colorful ball tower with rainbow design for tracking and color learning', 'age': '2+', 'rating': 0, 'features': ['Rainbow colors', 'Ball tracking'] },
+  { 'id': 110, 'code': 'TS789', 'name': 'Rainbow Stake Up', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Rainbow-themed stacking toy for color sequencing and motor skills', 'age': '2+', 'rating': 0, 'features': ['Rainbow theme', 'Stacking skills'] },
+  { 'id': 111, 'code': 'TS096', 'name': 'Round Button Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Round button lacing activity for developing button fastening skills', 'age': '3+', 'rating': 0, 'features': ['Button skills', 'Round shapes'] },
+  { 'id': 112, 'code': 'TS788', 'name': 'Shape Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Various shape lacing cards for geometric learning and fine motor development', 'age': '3+', 'rating': 0, 'features': ['Shape learning', 'Lacing practice'] },
+  { 'id': 113, 'code': 'TS790', 'name': 'Shirt Button Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Shirt-themed button lacing for practical dressing skill development', 'age': '3+', 'rating': 0, 'features': ['Dressing skills', 'Practical learning'] },
+  { 'id': 114, 'code': 'TS616', 'name': 'Spin & Sing Alphabet Zoo', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Spinning zoo toy with alphabet songs and animal sound learning', 'age': '2+', 'rating': 0, 'features': ['Alphabet songs', 'Zoo animals'] },
+  { 'id': 115, 'code': 'TS523', 'name': 'String Of Fruits Beads', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Fruit-shaped beads for stringing and developing fine motor coordination', 'age': '3+', 'rating': 0, 'features': ['Fruit shapes', 'Bead stringing'] },
+  { 'id': 116, 'code': 'TS601', 'name': 'Talent Blocks', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Multi-talented building blocks with various activities and challenges', 'age': '3+', 'rating': 0, 'features': ['Multi-activity', 'Talent development'] },
+  { 'id': 117, 'code': 'TS791', 'name': 'Tree Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Tree-shaped lacing activity for nature learning and threading practice', 'age': '3+', 'rating': 0, 'features': ['Tree theme', 'Nature learning'] },
+  { 'id': 118, 'code': 'TS233', 'name': 'Wooden Beat Lacing', 'category': 'Lacing', 'type': 'toy', 'image': '', 'description': 'Wooden lacing toy with rhythmic patterns and musical beat elements', 'age': '3+', 'rating': 0, 'features': ['Wooden material', 'Rhythmic patterns'] },
+
+  // Miscellaneous Toys
+  { 'id': 119, 'code': 'TS340', 'name': 'Animal Colour Track', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Animal-themed color tracking game for following patterns and sequences', 'age': '3+', 'rating': 0, 'features': ['Animal theme', 'Color tracking'] },
+  { 'id': 120, 'code': 'TS652', 'name': 'Azul', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Strategic tile-laying game with beautiful patterns and tactical gameplay', 'age': '8+', 'rating': 0, 'features': ['Tile laying', 'Strategic gameplay'] },
+  { 'id': 121, 'code': 'TS316', 'name': 'Bunnu Burrow', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Bunny-themed burrow exploration game with hiding and seeking elements', 'age': '4+', 'rating': 0, 'features': ['Bunny theme', 'Hide and seek'] },
+  { 'id': 122, 'code': 'TS459', 'name': 'Calculation Shelf Abacus', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Traditional abacus for mathematical calculations and number concept learning', 'age': '4+', 'rating': 0, 'features': ['Mathematical tool', 'Number concepts'] },
+  { 'id': 123, 'code': 'TS656', 'name': 'Catan', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Resource management and trading strategy game for advanced players', 'age': '10+', 'rating': 0, 'features': ['Resource management', 'Trading strategy'] },
+  { 'id': 124, 'code': 'TS369', 'name': 'Chatur Kids', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Chess-inspired strategy game designed specifically for children', 'age': '6+', 'rating': 0, 'features': ['Chess inspired', 'Child-friendly'] },
+  { 'id': 125, 'code': 'TS304', 'name': 'Checolo', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Checkers variant with colorful pieces and simplified rules for young players', 'age': '5+', 'rating': 0, 'features': ['Checkers variant', 'Colorful pieces'] },
+  { 'id': 126, 'code': 'TS657', 'name': 'Cluedo', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Classic mystery-solving detective game with deduction and reasoning elements', 'age': '8+', 'rating': 0, 'features': ['Mystery solving', 'Deductive reasoning'] },
+  { 'id': 127, 'code': 'TS385', 'name': 'Discover Asia', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Educational game exploring Asian countries, cultures, and geography', 'age': '6+', 'rating': 0, 'features': ['Asian geography', 'Cultural learning'] },
+  { 'id': 128, 'code': 'TS651', 'name': 'Doodle Quest', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Creative drawing adventure game with quest-based artistic challenges', 'age': '5+', 'rating': 0, 'features': ['Drawing adventure', 'Creative challenges'] },
+  { 'id': 129, 'code': 'TS342', 'name': 'Frog Twist & Turn', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Frog-themed twisting and turning toy for motor skill development', 'age': '2+', 'rating': 0, 'features': ['Frog theme', 'Motor skills'] },
+  { 'id': 130, 'code': 'TS757', 'name': 'Good Habits Board Gane', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Educational board game teaching positive habits and social values', 'age': '5+', 'rating': 0, 'features': ['Good habits', 'Social values'] },
+  { 'id': 131, 'code': 'TS135', 'name': 'Hare & Turtle Wooden Story', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Classic fable story toy with wooden pieces for narrative play', 'age': '3+', 'rating': 0, 'features': ['Classic fable', 'Wooden pieces'] },
+  { 'id': 132, 'code': 'TS653', 'name': 'Incredible India', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Comprehensive game exploring Indian culture, geography, and heritage', 'age': '6+', 'rating': 0, 'features': ['Indian culture', 'Heritage learning'] },
+  { 'id': 133, 'code': 'TS274', 'name': 'Jungle Lodo', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Jungle-themed Ludo game with wild animal pieces and adventure board', 'age': '4+', 'rating': 0, 'features': ['Jungle theme', 'Adventure board'] },
+  { 'id': 134, 'code': 'TS277', 'name': 'Know India', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Educational game for learning about Indian states, capitals, and facts', 'age': '6+', 'rating': 0, 'features': ['Indian geography', 'Educational facts'] },
+  { 'id': 135, 'code': 'TS432', 'name': 'Magnetic Animals', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Magnetic animal figures for creative play and magnetic force exploration', 'age': '3+', 'rating': 0, 'features': ['Magnetic animals', 'Creative play'] },
+  { 'id': 136, 'code': 'TS453', 'name': 'Memory Game Fun School', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'School-themed memory game with educational content and recall challenges', 'age': '4+', 'rating': 0, 'features': ['School theme', 'Memory development'] },
+  { 'id': 137, 'code': 'TS275', 'name': 'Monopoly Junir', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Junior version of classic Monopoly with simplified rules and child-friendly theme', 'age': '5+', 'rating': 0, 'features': ['Simplified rules', 'Child-friendly'] },
+  { 'id': 138, 'code': 'TS295', 'name': 'Never Ending Stories', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Storytelling game with endless narrative possibilities and creative elements', 'age': '5+', 'rating': 0, 'features': ['Storytelling', 'Creative narratives'] },
+  { 'id': 139, 'code': 'TS245', 'name': 'Pattern Play', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Pattern recognition and creation game for developing visual perception skills', 'age': '4+', 'rating': 0, 'features': ['Pattern recognition', 'Visual perception'] },
+  { 'id': 140, 'code': 'TS303', 'name': 'Quiz Time 1', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'First level quiz game with age-appropriate questions and learning content', 'age': '5+', 'rating': 0, 'features': ['Quiz format', 'Age-appropriate'] },
+  { 'id': 141, 'code': 'TS301', 'name': 'Quiz Time Part 2', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Advanced quiz game with challenging questions for continued learning', 'age': '6+', 'rating': 0, 'features': ['Advanced level', 'Challenging questions'] },
+  { 'id': 142, 'code': 'TS199', 'name': 'Quiz Time Senior', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Senior level quiz game with complex questions for older children', 'age': '8+', 'rating': 0, 'features': ['Senior level', 'Complex questions'] },
+  { 'id': 143, 'code': 'TS319', 'name': 'River Crossing', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Logic puzzle game involving river crossing challenges and strategic thinking', 'age': '6+', 'rating': 0, 'features': ['Logic puzzle', 'Strategic thinking'] },
+  { 'id': 144, 'code': 'TS531', 'name': 'Scoop Stake Up', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Scooping and stacking activity toy for coordination and motor skill development', 'age': '3+', 'rating': 0, 'features': ['Scooping action', 'Stacking skills'] },
+  { 'id': 145, 'code': 'TS201', 'name': 'Shape Ball', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Ball with various shapes for rolling, throwing, and shape recognition games', 'age': '2+', 'rating': 0, 'features': ['Shape recognition', 'Ball play'] },
+  { 'id': 146, 'code': 'TS310', 'name': 'Shoping Plaza', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Shopping-themed role-play game with market scenarios and transaction learning', 'age': '4+', 'rating': 0, 'features': ['Role-play', 'Shopping simulation'] },
+  { 'id': 147, 'code': 'TS461', 'name': 'Three In One Musical Board', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Triple-function musical board with multiple instruments and sound activities', 'age': '3+', 'rating': 0, 'features': ['Triple function', 'Musical instruments'] },
+  { 'id': 148, 'code': 'TS269', 'name': 'Tom & Jerry Chase Game', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Classic cartoon-themed chase game with Tom and Jerry characters', 'age': '4+', 'rating': 0, 'features': ['Cartoon theme', 'Chase mechanics'] },
+  { 'id': 149, 'code': 'TS290', 'name': 'Under The Sea', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Ocean exploration game with marine life and underwater adventure themes', 'age': '4+', 'rating': 0, 'features': ['Ocean theme', 'Marine life'] },
+  { 'id': 150, 'code': 'TS454', 'name': 'Word Building Spelling Game', 'category': 'Miscellaneous', 'type': 'toy', 'image': '', 'description': 'Spelling and word construction game for vocabulary and language development', 'age': '5+', 'rating': 0, 'features': ['Vocabulary building', 'Spelling practice'] },
+
+  // Musical Toys
+  { 'id': 151, 'code': 'TS810', 'name': 'Air Ball', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': 'Floating ball toy with air stream and musical sound effects', 'age': '3+', 'rating': 0, 'features': ['Floating action', 'Musical sounds'] },
+  { 'id': 152, 'code': 'TS220', 'name': 'Black Drum', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': 'Classic black drum for rhythm development and musical expression', 'age': '3+', 'rating': 0, 'features': ['Rhythm development', 'Musical expression'] },
+  { 'id': 153, 'code': 'TS805', 'name': 'Cargo Mini Train', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': 'Mini cargo train with realistic sounds and moving parts', 'age': '2+', 'rating': 0, 'features': ['Train sounds', 'Moving parts'] },
 { 'id': 154, 'code': 'TS249', 'name': 'Chomp Diano', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
 { 'id': 155, 'code': 'TS538', 'name': 'Cute Rabbit Musical Piano', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
 { 'id': 156, 'code': 'TS812', 'name': 'Drum With Shapes', 'category': 'Musical', 'type': 'toy', 'image': '', 'description': '', 'age': '', 'rating': 0, 'features': [] },
@@ -408,39 +424,44 @@ const products = [{ 'id': 1, 'code': 'TS397', 'name': 'Brick Tiles Blocks', 'cat
 
 const Catalog = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedType, setSelectedType] = useState('toy');
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    const matchesType = selectedType === 'all' || product.type === selectedType;
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.code.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesType && matchesSearch;
+    return matchesCategory && matchesSearch;
   });
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 mb-12">
+    <div className="min-h-screen bg-gradient-to-b from-white via-pink-50 to-orange-50 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Heading */}
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-pink-600 mb-10">
+          Explore Our Toy Collection
+        </h1>
+
         {/* Search and Filters */}
-        <div className="flex flex-col lg:flex-row gap-4 items-center mb-8">
-          <div className="relative w-full lg:max-w-md">
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-10">
+          <div className="relative w-full sm:max-w-md">
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
               placeholder="Search by name or code..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-pink-500 text-sm"
+              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 text-sm shadow-sm"
             />
           </div>
-          <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-2 border-2 border-gray-200 rounded-xl text-sm">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full sm:w-auto px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 text-sm shadow-sm"
+          >
             <option value="all">All Categories</option>
             {toyCategories.map((cat, idx) => (
-              <option key={idx} value={cat}>
-                {cat}
-              </option>
+              <option key={idx} value={cat}>{cat}</option>
             ))}
           </select>
         </div>
@@ -448,25 +469,42 @@ const Catalog = () => {
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map(product => (
-            <div key={product.id} className="bg-white rounded-2xl shadow-lg p-4 flex flex-col">
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: product.id * 0.02 }}
+              className="bg-white rounded-2xl shadow-lg p-4 flex flex-col hover:shadow-xl transition-shadow duration-300"
+            >
               <div className="w-full aspect-square bg-gray-100 rounded-xl mb-4 overflow-hidden">
-                <img src={product.image || 'https://via.placeholder.com/300x300?text=No+Image'}
-                  alt={product.name} className="w-full h-full object-cover" />
+                <img
+  src={getProductImagePath(product.code)}
+  onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x300?text=No+Image'; }}
+  alt={product.name}
+  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+/>
+
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">{product.name}</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">{product.name}</h3>
               <p className="text-sm text-gray-600 mb-1">Code: {product.code}</p>
-              <p className="text-sm text-orange-600 font-semibold mb-2">{product.category}</p>
+              <p className="text-sm text-pink-600 font-semibold mb-3">{product.category}</p>
               <button
-                onClick={() => window.open(`https://wa.me/917900197763?text=${encodeURIComponent(`Hi! I'm interested in "${product.name}" from TOY STATION.`)}`, '_blank')}
-                className="mt-auto bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-semibold">
+                onClick={() =>
+                  window.open(`https://wa.me/917900197763?text=${encodeURIComponent(`Hi! I'm interested in "${product.name}" from TOY STATION.`)}`, '_blank')
+                }
+                className="mt-auto bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md transition-all duration-300"
+              >
                 Ask About This
               </button>
-            </div>
+            </motion.div>
           ))}
         </div>
 
+        {/* No Products Found */}
         {filteredProducts.length === 0 && (
-          <div className="text-center mt-16 text-gray-500">No matching products found.</div>
+          <div className="text-center mt-16 text-gray-500 text-lg">
+            No matching products found.
+          </div>
         )}
       </div>
     </div>
